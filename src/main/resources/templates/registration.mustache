@@ -5,29 +5,35 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container" align="center">
+<div align="center">
+    <div class="card" style="width: 40rem">
+        <div class="container">
 
-    <h2>Страница регистрации</h2>
+            <h2>Страница регистрации</h2>
 
-    <div class="alert alert-danger" role="alert">
-    {{#message}}
-        {{message}}
-    {{/message}}
+            {{#message}}
+                <div class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+            {{/message}}
+            <br>
+            <form action="/registration" method="post">
+                <div><label> Логин : <input type="text" class="form-control" name="username" placeholder="Логин"/> </label></div>
+                <div><label> Пароль: <input type="password" class="form-control" name="password" placeholder="Пароль"/> </label></div>
+                <div><label> Имя: <input type="text" class="form-control" name="name" placeholder="Имя"/> </label></div>
+                <div><label> Отчество: <input type="text" class="form-control" name="midName" placeholder="Отчество"/> </label></div>
+                <div><label> Фамилия: <input type="text" class="form-control" name="lastName" placeholder="Фамилия"/> </label></div>
+                <div><label> Номер паспорта: <input type="text" class="form-control" name="passportNumber" placeholder="Номер паспорта"/> </label></div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <div><input type="submit" class="btn btn-primary my-1" value="Зарегистрироваться"/></div>
+            </form>
+            <br>
+            <a href="/login">Войти в уже существующую запись</a><br>
+            <br>
+        </div>
     </div>
-
-    <form action="/registration" method="post">
-        <div><label> Логин : <input type="text" name="username" placeholder="Логин"/> </label></div>
-        <div><label> Пароль: <input type="password" name="password" placeholder="Пароль"/> </label></div>
-        <div><label> Имя: <input type="text" name="name" placeholder="Имя"/> </label></div>
-        <div><label> Отчество: <input type="text" name="midName" placeholder="Отчество"/> </label></div>
-        <div><label> Фамилия: <input type="text" name="lastName" placeholder="Фамилия"/> </label></div>
-        <div><label> Номер паспорта: <input type="text" name="passportNumber" placeholder="Номер паспорта"/> </label></div>
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <div><input type="submit" value="Зарегистрироваться"/></div>
-    </form>
-    <a href="/login">Войти в уже существующую запись</a>
-
 </div>
+
 
 </body>
 </html>

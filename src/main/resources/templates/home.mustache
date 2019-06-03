@@ -4,31 +4,31 @@
     <title>Личный кабинет</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></head>
 <body>
+<br>
+<br>
+<br>
 <div align="center">
     <div class="card" style="width: 50rem; height: 50rem" >
-        <div class="container">
-            <div align="right">
-                <br>
-                <form method="post" action="/logout">
-                    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-                    <input type="submit" class="btn btn-light" value="Выйти">
-                </form>
-            </div>
+        <div align="right" style="padding-left: 1rem">
+            <br>
+            <form method="post" action="/logout">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <input type="submit" class="btn btn-light" value="Выйти">
+            </form>
+        </div>
+
+        <div align="left" style="padding-right: 1rem">
+            {{#client}}
+                <div><h3><strong>{{name}} {{midName}} {{lastName}}</strong></h3></div>
+            {{/client}}
+        </div>
             <h2>Личный кабинет</h2>
-                <div>
-                    {{#client}}
-                        <div><h3><strong>Привет, {{name}} {{midName}} {{lastName}}!</strong></h3></div>
-                    {{/client}}
-                </div>
                 <div align="right">
                     Баланс:<br>
                     {{#client}}
                         <b>{{balance}}</b>
                     {{/client}}
                 </div>
-        </div>
-
-        <br>
         <div align="center">
             <table>
                 <th>
@@ -74,8 +74,7 @@
         </table>
     </div>
 
-
-</div>
+    </div>
 </div>
 </body>
 </html>

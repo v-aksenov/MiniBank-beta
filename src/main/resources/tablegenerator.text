@@ -1,0 +1,67 @@
+create database bank02
+    with owner postgres;
+
+create sequence hibernate_sequence;
+
+alter sequence hibernate_sequence owner to postgres;
+
+create table client
+(
+    id              bigint not null
+        constraint client_pkey
+            primary key,
+    last_name       varchar(255),
+    mid_name        varchar(255),
+    name            varchar(255),
+    passport_number varchar(255),
+    balance         bigint
+);
+
+alter table client
+    owner to postgres;
+
+create table users
+(
+    id        bigint  not null
+        constraint users_pkey
+            primary key,
+    enabled   boolean not null,
+    password  varchar(255),
+    username  varchar(255),
+    client_id bigint
+        constraint fk8tfw2gt4n1u3lqfd3vnqf51te
+            references client
+);
+
+alter table users
+    owner to postgres;
+
+create table user_role
+(
+    user_id bigint not null
+        constraint fkj345gk1bovqvfame88rcx7yyx
+            references users,
+    roles   varchar(255)
+);
+
+alter table user_role
+    owner to postgres;
+
+create table transactions
+(
+    id           bigint not null
+        constraint transactions_pkey
+            primary key,
+    amount       bigint,
+    from_user_id bigint
+        constraint fkpkf4bjq8dbuyxt0qfvbcmm7d
+            references users,
+    to_user_id   bigint
+        constraint fkyud5vx71vhc179ney0pdat27
+            references users,
+    date         timestamp
+);
+
+alter table transactions
+    owner to postgres;
+

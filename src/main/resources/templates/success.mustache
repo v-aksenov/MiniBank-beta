@@ -6,16 +6,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<div class="center">
+<br><br><br>
+<div align="center">
     <div class="card" style="width: 23rem" >
         <div class="alert alert-success" role="alert">
-            Успех!<br>
+            <strong>Успех!</strong><br>
             {{#message}}
                 {{message}}
             {{/message}}
         </div>
         <br>
-        <a href="/home">Личный кабинет</a>
+        <div align="center">
+            <form action="/home">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <input type="submit" class="btn btn-primary my-1" value="Личный кабинет">
+            </form>
+        </div>
+        <br><br>
     </div>
 </div>
 </body>

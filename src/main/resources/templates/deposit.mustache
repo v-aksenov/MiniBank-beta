@@ -5,28 +5,37 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-Пополнение
-<div>
-    <form action="/home">
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <input type="submit" value="Личный кабинет">
-    </form>
-</div>
+<br><br><br>
 <div align="center">
-    <div align="left">
-        {{#client}}
-            <div>Hello, {{name}} {{midName}} {{lastName}}!</div>
-        {{/client}}
+    <div class="card" style="width: 40rem; height: 20rem">
+        <div align="left">
+
+            <form action="/home">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <input type="submit" class="btn btn-light" value="Личный кабинет">
+            </form>
+            <br>
+        </div>
+
+        <br>
+        <h3 align="center"><strong>Пополнение</strong></h3>
+        <br>
+
+        <br>
+        <div class="container" style="width: 20rem">
+            <form action="/deposit" method="post">
+                <div class="form-group">
+                    <label> Сумма: <input class="form-control" type="text" name="amount"placeholder="Сумма"/> </label>
+                    <small id="help" class="form-text text-muted">Только сегодня! Пополнение бесплатно!</small>
+                </div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <input type="submit" class="btn btn-primary my-1" value="Пополнить">
+            </form>
+        </div>
+        <br><br>
     </div>
 </div>
-<br>
-<div align="center">
-    <form action="/deposit" method="post">
-        Сумма: <input type="text" name="amount" placeholder="Сумма">
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <input type="submit" value="Пополнить">
-    </form>
-</div>
+
 
 
 </body>

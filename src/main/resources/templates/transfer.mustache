@@ -5,30 +5,31 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-Пополнение
-<div>
-    <form action="/home">
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <input type="submit" value="Личный кабинет">
-    </form>
-</div>
+<br><br><br>
 <div align="center">
-    <div align="left">
-        {{#client}}
-            <div>Hello, {{name}} {{midName}} {{lastName}}!</div>
-        {{/client}}
+    <div class="card" style="width: 40rem" >
+        <div align="left">
+            <form action="/home">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <input type="submit" class="btn btn-light" value="Личный кабинет">
+            </form>
+            <br>
+        </div>
+        <br>
+        <h3 align="center"><strong>Перевод</strong><br></h3>
+
+        <br>
+        <div align="center">
+                <form action="/transfer" method="post">
+                    <div class="form-group row" style="width: 30rem">
+                        <label for="username">Логин получателя:</label><input class="form-control" type="text" id="username" name="username"placeholder="Логин"/>
+                        <label for="amount">Сумма:</label> <input class="form-control" type="text" id="amount" name="amount"placeholder="Сумма"/>
+                        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                        <input type="submit" class="btn btn-primary my-1" value="Перевести">
+                    </div>
+                </form>
+        </div>
     </div>
 </div>
-<br>
-<div align="center">
-    <form action="/transfer" method="post">
-        Логин получателя: <input type="text" name="username" placeholder="Логин">
-        Сумма: <input type="text" name="amount" placeholder="Сумма">
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <input type="submit" value="Перевести">
-    </form>
-</div>
-
-
 </body>
 </html>
