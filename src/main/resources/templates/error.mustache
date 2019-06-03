@@ -2,16 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Ошибка!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-Ошибка!
-<div>
-    {{#message}}
-        {{message}}
-    {{/message}}
+<div class="center">
+    <div class="card" style="width: 23rem" >
+        <div class="alert alert-danger" role="alert">
+            <strong>Ошибка!</strong>
+            {{#message}}
+                {{message}}
+            {{/message}}
+        </div>
+        <br>
+        <a href="/home">Личный кабинет</a>
+    </div>
 </div>
-<br>
-<a href="/home">Личный кабинет</a>
 </body>
 </html>

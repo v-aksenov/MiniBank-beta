@@ -1,49 +1,81 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Spring Security Example </title>
-</head>
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></head>
 <body>
-Личный кабинет
-<div>
-    <form method="post" action="/logout">
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <input type="submit" value="Выйти">
-    </form>
-</div>
 <div align="center">
-    <div align="left">
-        {{#client}}
-            <div>Hello, {{name}} {{midName}} {{lastName}}!</div>
-        {{/client}}
-    </div>
-    <div align="right">
-        Баланс:<br>
-        {{#client}}
-            {{balance}}
-        {{/client}}
-    </div>
-</div>
-<br>
-<div align="center">
-    <form action="/deposit">
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <input type="submit" value="Пополнить">
-    </form>
-    <form action="/transfer">
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <input type="submit" value="Перевести">
-    </form>
-</div>
-
-<div align="center">
-    Список операций:
-    {{#transactions}}
-        <div>
-            <span> {{type}} - {{fromUsername}} - {{toUser.username}} - {{amount}}</span>
+    <div class="card" style="width: 50rem; height: 50rem" >
+        <div class="container">
+            <div align="right">
+                <br>
+                <form method="post" action="/logout">
+                    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                    <input type="submit" class="btn btn-light" value="Выйти">
+                </form>
+            </div>
+            <h2>Личный кабинет</h2>
+                <div>
+                    {{#client}}
+                        <div><h3><strong>Привет, {{name}} {{midName}} {{lastName}}!</strong></h3></div>
+                    {{/client}}
+                </div>
+                <div align="right">
+                    Баланс:<br>
+                    {{#client}}
+                        <b>{{balance}}</b>
+                    {{/client}}
+                </div>
         </div>
-    {{/transactions}}
-</div>
 
+        <br>
+        <div align="center">
+            <table>
+                <th>
+                    <form action="/deposit">
+                        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                        <input type="submit" class="btn btn-light" value="Пополнить">
+                    </form>
+                </th>
+                <th>
+                    <form action="/transfer">
+                        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                        <input type="submit" class="btn btn-light" value="Перевести">
+                    </form>
+                </th>
+            </table>
+        </div>
+
+<br>
+    <h4 align="center">Список операций:</h4>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Время</th>
+                <th scope="col">Вид операции</th>
+                <th scope="col">Отправитель</th>
+                <th scope="col">Получатель</th>
+                <th scope="col">Сумма</th>
+            </tr>
+            </thead>
+
+
+
+            {{#transactions}}
+                <tr>
+                    <td scope="col">{{date}}</td>
+                    <td scope="col">{{type}}</td>
+                    <td scope="col">{{fromUsername}}</td>
+                    <td scope="col">{{toUser.username}}</td>
+                    <td scope="col">{{amount}}</td>
+                </tr>
+            {{/transactions}}
+        </table>
+    </div>
+
+
+</div>
+</div>
 </body>
 </html>

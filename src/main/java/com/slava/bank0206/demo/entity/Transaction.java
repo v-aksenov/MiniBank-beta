@@ -1,6 +1,7 @@
 package com.slava.bank0206.demo.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "transactions")
@@ -9,6 +10,8 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private Timestamp date;
+
     @ManyToOne
     @JoinColumn
     private User fromUser;
@@ -54,9 +57,18 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
     public Transaction(User fromUser, User toUser, Long amount) {
         this.fromUser = fromUser;
         this.toUser = toUser;
         this.amount = amount;
+        this.date = new Timestamp(System.currentTimeMillis());
     }
 }

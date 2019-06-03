@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Spring Security Example </title>
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-Страница регистрации
+<div class="container" align="center">
 
-{{#message}}
-    {{message}}
-{{/message}}
+    <h2>Страница регистрации</h2>
 
-<form action="/registration" method="post">
-    <div><label> Логин : <input type="text" name="username" placeholder="Логин"/> </label></div>
-    <div><label> Пароль: <input type="password" name="password" placeholder="Пароль"/> </label></div>
-    <div><label> Имя: <input type="text" name="name" placeholder="Имя"/> </label></div>
-    <div><label> Отчество: <input type="text" name="midName" placeholder="Отчество"/> </label></div>
-    <div><label> Фамилия: <input type="text" name="lastName" placeholder="Фамилия"/> </label></div>
-    <div><label> Номер паспорта: <input type="text" name="passportNumber" placeholder="Номер паспорта"/> </label></div>
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-    <div><input type="submit" value="Зарегистрироваться"/></div>
-</form>
-<a href="/login">Войти в уже существующую запись</a>
+    <div class="alert alert-danger" role="alert">
+    {{#message}}
+        {{message}}
+    {{/message}}
+    </div>
+
+    <form action="/registration" method="post">
+        <div><label> Логин : <input type="text" name="username" placeholder="Логин"/> </label></div>
+        <div><label> Пароль: <input type="password" name="password" placeholder="Пароль"/> </label></div>
+        <div><label> Имя: <input type="text" name="name" placeholder="Имя"/> </label></div>
+        <div><label> Отчество: <input type="text" name="midName" placeholder="Отчество"/> </label></div>
+        <div><label> Фамилия: <input type="text" name="lastName" placeholder="Фамилия"/> </label></div>
+        <div><label> Номер паспорта: <input type="text" name="passportNumber" placeholder="Номер паспорта"/> </label></div>
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <div><input type="submit" value="Зарегистрироваться"/></div>
+    </form>
+    <a href="/login">Войти в уже существующую запись</a>
+
+</div>
+
 </body>
 </html>

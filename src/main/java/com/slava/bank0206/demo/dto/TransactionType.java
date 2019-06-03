@@ -3,11 +3,22 @@ package com.slava.bank0206.demo.dto;
 
 import com.slava.bank0206.demo.entity.User;
 
+import java.sql.Timestamp;
+
 public class TransactionType {
     private User fromUser;
     private User toUser;
     private Long amount;
     private String type;
+    private Timestamp date;
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
 
     public TransactionType() {
     }
@@ -48,10 +59,11 @@ public class TransactionType {
         this.type = type;
     }
 
-    public TransactionType(User fromUser, User toUser, Long amount, User baseUser) {
+    public TransactionType(User fromUser, User toUser, Long amount, Timestamp date, User baseUser) {
         this.fromUser = fromUser;
         this.toUser = toUser;
         this.amount = amount;
+        this.date = date;
         try {
             String fromUsername = fromUser.getUsername();
             String toUsername = toUser.getUsername();

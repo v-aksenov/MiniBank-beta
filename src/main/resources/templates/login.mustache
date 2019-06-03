@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Spring Security Example </title>
+    <title>Вход</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-Страница входа.
-{{#message}}
-    {{message}}
-{{/message}}
-<form action="/login" method="post">
-    <div><label> Логин : <input type="text" name="username"/> </label></div>
-    <div><label> Пароль: <input type="password" name="password"/> </label></div>
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-    <div><input type="submit" value="Войти"/></div>
-</form>
-<a href="/registration">Регистрация</a>
+<div align="center">
+    <div class="card" style="width: 23rem" >
+        <h2>Страница входа.</h2>
+        {{#message}}
+            {{message}}
+        {{/message}}
+        <br>
+        <div>
+            <form action="/login" method="post">
+                <div><label> Логин : <input class="form-control" type="text" name="username"/> </label></div>
+                <div><label> Пароль: <input class="form-control" type="password" name="password"/> </label></div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <button class="btn btn-primary my-1" type="submit">Войти</button>
+            </form>
+        </div>
+
+        <a href="/registration">Регистрация</a>
+    </div>
+</div>
+
 </body>
 </html>

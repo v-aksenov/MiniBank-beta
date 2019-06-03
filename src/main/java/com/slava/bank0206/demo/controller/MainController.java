@@ -49,7 +49,8 @@ public class MainController {
             @AuthenticationPrincipal User user,
             Map<String, Object> model) {
 
-        model.put("client", user.getClient());
+
+        model.put("client", clientService.getClientByUsername(user.getUsername()));
         model.put("transactions", transactService.getAll(user));
 
         return "home";

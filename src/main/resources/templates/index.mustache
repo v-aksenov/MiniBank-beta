@@ -2,11 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Главная</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 </head>
 <body>
-<div> Welcome to MiniBank! </div>
-<a href="/login">Вход</a>
-<a href="/registration">Регистрация</a>
+<div class="container" align="center">
+    <div class="card" style="width: 23rem" >
+        <div> <h2>Добро пожаловать в MiniBank!</h2> </div>
+        <table>
+            <th>
+            <td>
+                <form action="/login">
+                    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                    <input type="submit" class="btn btn-md btn-primary btn-block" value="Вход">
+                </form>
+            </td>
+            </th>
+            <th>
+            <td>
+                <form action="/registration">
+                    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                    <input type="submit" class="btn btn-md btn-primary btn-block" value="Регистрация">
+                </form>
+            </td>
+            </th>
+
+        </table>
+    </div>
+</div>
+
 </body>
+
+
 </html>
