@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Spring Security Example </title>
+</head>
+<body>
+Пополнение
+<div>
+    <form action="/home">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <input type="submit" value="Личный кабинет">
+    </form>
+</div>
+<div align="center">
+    <div align="left">
+        {{#client}}
+            <div>Hello, {{name}} {{midName}} {{lastName}}!</div>
+        {{/client}}
+    </div>
+</div>
+<br>
+<div align="center">
+    <form action="/deposit" method="post">
+        Сумма: <input type="text" name="amount" placeholder="Сумма">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <input type="submit" value="Пополнить">
+    </form>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ClientList</title>
+</head>
+<body>
+<div>
+    <form method="post" action="/newClient">
+        <input type="text" name="name" placeholder="name">
+        <input type="text" name="midName" placeholder="middleName">
+        <input type="text" name="lastName" placeholder="lastName">
+        <input type="text" name="passportNumber" placeholder="passportNumber">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <button type="submit">Добавить клиента</button>
+    </form>
+</div>
+</body>
+</html>

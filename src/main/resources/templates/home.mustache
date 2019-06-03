@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Spring Security Example </title>
+</head>
+<body>
+Личный кабинет
+<div>
+    <form method="post" action="/logout">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <input type="submit" value="Выйти">
+    </form>
+</div>
+<div align="center">
+    <div align="left">
+        {{#client}}
+            <div>Hello, {{name}} {{midName}} {{lastName}}!</div>
+        {{/client}}
+    </div>
+    <div align="right">
+        Баланс:<br>
+        {{#client}}
+            {{balance}}
+        {{/client}}
+    </div>
+</div>
+<br>
+<div align="center">
+    <form action="/deposit">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <input type="submit" value="Пополнить">
+    </form>
+    <form action="/transfer">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <input type="submit" value="Перевести">
+    </form>
+</div>
+
+<div align="center">
+    Список операций:
+    {{#transactions}}
+        <div>
+            <span> {{type}} - {{fromUsername}} - {{toUser.username}} - {{amount}}</span>
+        </div>
+    {{/transactions}}
+</div>
+
+</body>
+</html>
