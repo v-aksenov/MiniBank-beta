@@ -9,8 +9,15 @@
 <div align="center">
     <div class="card" style="width: 23rem" >
         <h2>Страница входа.</h2>
+        {{#error}}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+        {{/error}}
         {{#message}}
-            {{message}}
+            <div class="alert alert-primary" role="alert">
+                {{message}}
+            </div>
         {{/message}}
         <br>
         <div>

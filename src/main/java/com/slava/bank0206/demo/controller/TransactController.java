@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Map;
 
@@ -53,9 +54,14 @@ public class TransactController {
     public String doTransfer(
             @AuthenticationPrincipal User user,
             String username,
-            Long amount,
+            String amountString,
             Map<String, Object> model
     ) {
+        if (username.isEmpty()) {
+            model.put("message", "Введите логин получателя!");
+            return "transfer";
+        }
+
         User toUser = userService.getUserByUsername(username);
 
         if(toUser == null) {
@@ -63,9 +69,26 @@ public class TransactController {
             return "error";
         }
 
-        transactService.transfer(user, toUser, amount);
+        try {
+            
+            Long amount = Long.valueOf(amountString);
 
-        model.put("message", "Перевод прошел успешно!");
-        return "success";
+            if(amount < 0) {
+                model.put("message", "Введите корректкную сумму для перевода.");
+                return "transfer";
+            }
+
+            if(!transactService.transfer(user, toUser, amount)) {
+                    model.put("message","На счете недостаточно средств для совершения перевода.");
+                    return "error";
+            }
+
+            model.put("message", "Перевод прошел успешно!");
+            return "success";
+
+        } catch (NumberFormatException e) {
+            model.put("message", "Введите сумму для перевода в виде целого неотрицательного числа.");
+            return "transfer";
+        }
     }
 }

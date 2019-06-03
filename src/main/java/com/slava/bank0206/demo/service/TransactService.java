@@ -31,11 +31,17 @@ public class TransactService {
         transactRepo.save(transaction);
     }
 
-    public void transfer(User fromUser, User toUser, Long amount) {
+    public boolean transfer(User fromUser, User toUser, Long amount) {
         Transaction transaction = new Transaction(fromUser,toUser,amount);
 
         Client clientFrom = fromUser.getClient();
         Long balanceUserFrom = clientFrom.getBalance();
+
+        //Проверка на необходимое количество денег на счете.
+        if(balanceUserFrom < amount) {
+            return false;
+        }
+
         balanceUserFrom -= amount;
         clientFrom.setBalance(balanceUserFrom);
 
@@ -49,6 +55,8 @@ public class TransactService {
         clientRepo.flush();
         clientRepo.save(clientTo);
         transactRepo.save(transaction);
+
+        return true;
     }
 
     public List<TransactionType> getAll(User user) {

@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.Map;
@@ -42,6 +43,23 @@ public class RegistrationController {
 
         model.put("message", "Регистрация прошла успешно.");
         return "redirect:/login";
+    }
+
+    @GetMapping("/login")
+    public String showLogin(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout,
+            Map<String, Object> model) {
+
+        if (error != null) {
+            model.put("error", "Неверный логин или пароль!");
+        }
+
+        if (logout != null) {
+            model.put("message", "Вы успешно вышли из учетной записи.");
+        }
+
+        return "login";
     }
 
 

@@ -18,12 +18,19 @@
         <br>
         <h3 align="center"><strong>Перевод</strong><br></h3>
 
+        {{#message}}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+        {{/message}}
         <br>
         <div align="center">
                 <form action="/transfer" method="post">
                     <div class="form-group row" style="width: 30rem">
-                        <label for="username">Логин получателя:</label><input class="form-control" type="text" id="username" name="username"placeholder="Логин"/>
-                        <label for="amount">Сумма:</label> <input class="form-control" type="text" id="amount" name="amount"placeholder="Сумма"/>
+                        <label for="username">Логин получателя:</label><input
+                            class="form-control" type="text" id="username" name="username"placeholder="Логин"/>
+                        <label for="amountString">Сумма:</label> <input
+                            class="form-control" type="text" id="amountString" name="amountString"placeholder="Сумма"/>
                         <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
                         <input type="submit" class="btn btn-primary my-1" value="Перевести">
                     </div>
