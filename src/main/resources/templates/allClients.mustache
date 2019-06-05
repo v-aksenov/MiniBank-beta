@@ -2,17 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ClientList</title>
+    <title>Список пользователей</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<div>
-    <h1>Все клиенты</h1>
-        {{#clients}}
-            <div>
-                <b>{{id}}</b>
-                <span> - {{name}} - {{midName}} - {{lastName}} - {{passportNumber}}</span>
-            </div>
-        {{/clients}}
+<br>
+<br>
+<div align="center">
+    <div class="card" style="width: 25rem; height: 40rem" >
+        <br>
+        <h4 align="center">Список пользователей</h4>
+        <br>
+        <br>
+        <br>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Номер</th>
+                    <th scope="col">Логин</th>
+                </tr>
+                </thead>
+                {{#users}}
+                    <tr>
+                        <td scope="col">{{id}}</td>
+                        <td scope="col">{{username}}</td>
+                    </tr>
+                {{/users}}
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

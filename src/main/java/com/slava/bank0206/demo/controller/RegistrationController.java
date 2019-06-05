@@ -2,19 +2,15 @@ package com.slava.bank0206.demo.controller;
 
 import com.slava.bank0206.demo.dto.ClientDto;
 import com.slava.bank0206.demo.dto.UserDto;
-import com.slava.bank0206.demo.entity.Client;
-import com.slava.bank0206.demo.entity.Role;
-import com.slava.bank0206.demo.entity.User;
 import com.slava.bank0206.demo.repos.UserRepo;
 import com.slava.bank0206.demo.service.RegistrationService;
+import com.slava.bank0206.demo.validator.RegisterValid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collections;
 import java.util.Map;
 
 @Controller
@@ -34,15 +30,29 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(UserDto user, ClientDto client, Map<String, Object> model) {
 
-        String message = registrationService.doRegister(user,client);
+        RegisterValid registerValid = registrationService.doRegister(user,client);
 
-        if(message.length() > 0) {
-            model.put("message", message);
+        if(registerValid.isValid()) {
+
+            model.put("success", "Регистрация прошла успешно!");
             return "registration";
-        }
 
-        model.put("message", "Регистрация прошла успешно.");
-        return "redirect:/login";
+        } else {
+
+            if(!registerValid.isUniqUserName()) {
+                model.put("message", "Клиент с таким логином уже существует!");
+                return "registration";
+            }
+
+            if(!registerValid.isUniqPassport()) {
+                model.put("message", "Клиент с таким номером паспорта уже существует!");
+                return "registration";
+            }
+
+
+        }
+        model.put("message", "Неизвестная ошибка!");
+        return "registration";
     }
 
     @GetMapping("/login")

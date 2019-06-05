@@ -7,12 +7,12 @@
 <body>
 <br><br><br>
 <div align="center">
-    <div class="card" style="width: 40rem; height: 20rem">
+    <div class="card" style="width: 40rem; height: 30rem">
         <div align="left">
 
             <form action="/home">
                 <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-                <input type="submit" class="btn btn-light" value="Личный кабинет">
+                <input type="submit" class="btn btn-light" value="Назад">
             </form>
             <br>
         </div>
@@ -20,8 +20,11 @@
         <br>
         <h3 align="center"><strong>Пополнение</strong></h3>
         <br>
-
-        <br>
+        {{#message}}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+        {{/message}}
         <div class="container" style="width: 20rem">
             <form action="/deposit" method="post">
                 <div class="form-group">

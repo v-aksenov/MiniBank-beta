@@ -6,6 +6,9 @@ import com.slava.bank0206.demo.entity.Transaction;
 import com.slava.bank0206.demo.entity.User;
 import com.slava.bank0206.demo.repos.ClientRepo;
 import com.slava.bank0206.demo.repos.TransactRepo;
+import com.slava.bank0206.demo.repos.UserRepo;
+import com.slava.bank0206.demo.validator.TransactValid;
+import com.slava.bank0206.demo.validator.TransactionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,41 +25,65 @@ public class TransactService {
     @Autowired
     private ClientRepo clientRepo;
 
-    public void deposit(User user, Long amount) {
-        Transaction transaction = new Transaction(null,user, amount);
-        Long balance = user.getClient().getBalance();
-        balance += amount;
-        user.getClient().setBalance(balance);
-        clientRepo.save(user.getClient());
-        transactRepo.save(transaction);
-    }
+    @Autowired
+    private UserRepo userRepo;
 
-    public boolean transfer(User fromUser, User toUser, Long amount) {
-        Transaction transaction = new Transaction(fromUser,toUser,amount);
+    @Autowired
+    private TransactionValidator transactionValidator;
 
-        Client clientFrom = fromUser.getClient();
-        Long balanceUserFrom = clientFrom.getBalance();
+    public TransactValid deposit(User user, String amount) {
 
-        //Проверка на необходимое количество денег на счете.
-        if(balanceUserFrom < amount) {
-            return false;
+        TransactValid transactValid = transactionValidator.validateDeposit(amount);
+        if(transactValid.isValid()) {
+
+            Long amountLong = Long.valueOf(amount);
+            Transaction transaction = new Transaction(null,user, amountLong);
+            Long balance = user.getClient().getBalance();
+            balance += amountLong;
+            user.getClient().setBalance(balance);
+
+            clientRepo.save(user.getClient());
+            transactRepo.save(transaction);
         }
 
-        balanceUserFrom -= amount;
-        clientFrom.setBalance(balanceUserFrom);
+        return transactValid;
+    }
 
+    public TransactValid transfer(User fromUser, String toUser, String amount) {
 
-        Client clientTo = toUser.getClient();
-        Long balanceToUser = clientTo.getBalance();
-        balanceToUser += amount;
-        clientTo.setBalance(balanceToUser);
+        TransactValid transactValid = new TransactValid();
 
-        clientRepo.save(clientFrom);
-        clientRepo.flush();
-        clientRepo.save(clientTo);
-        transactRepo.save(transaction);
+        //Проверка на существование получателя. Проводится здесь, чтобы не делать дублирующий запрос в базу.
+        User userTo = userRepo.findByUsername(toUser);
+        if(userTo == null) {
+            transactValid.setValidUserTo(false);
+        }
 
-        return true;
+        //Проверка остальных факторов
+        transactionValidator.validateTransaction(fromUser,amount,transactValid);
+
+        if(transactValid.isValid()) {
+
+            Long amountLong = Long.valueOf(amount);
+            Transaction transaction = new Transaction(fromUser,userTo,amountLong);
+
+            Client clientFrom = fromUser.getClient();
+            Long balanceUserFrom = clientFrom.getBalance();
+            balanceUserFrom -= amountLong;
+            clientFrom.setBalance(balanceUserFrom);
+
+            Client clientTo = userTo.getClient();
+            Long balanceToUser = clientTo.getBalance();
+            balanceToUser += amountLong;
+            clientTo.setBalance(balanceToUser);
+
+            clientRepo.save(clientFrom);
+            clientRepo.flush();
+            clientRepo.save(clientTo);
+            transactRepo.save(transaction);
+        }
+
+        return transactValid;
     }
 
     public List<TransactionType> getAll(User user) {

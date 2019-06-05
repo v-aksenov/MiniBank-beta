@@ -6,11 +6,10 @@ import com.slava.bank0206.demo.entity.Client;
 import com.slava.bank0206.demo.entity.User;
 import com.slava.bank0206.demo.repos.ClientRepo;
 import com.slava.bank0206.demo.repos.UserRepo;
+import com.slava.bank0206.demo.validator.RegisterValid;
 import com.slava.bank0206.demo.validator.RegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 public class RegistrationService {
@@ -24,25 +23,19 @@ public class RegistrationService {
     @Autowired
     private RegistrationValidator registrationValidator;
 
-    //Возвращаем строку успешной регистрации, либо ошибки, которую контроллер отправляет в форму.
-    public String doRegister(UserDto user, ClientDto client) {
 
-        StringBuilder sb = new StringBuilder();
-        Map<String,String> validation = registrationValidator.validateRegistrationForm(user,client);
-        if(validation.isEmpty()) {
-            Client clientEntity = new Client(client.getName(), client.getMidName(),
-                    client.getLastName(), client.getPassportNumber());
-            clientRepo.save(clientEntity);
+    public RegisterValid doRegister(UserDto user, ClientDto client) {
 
-            User userEntity = new User(user.getUsername(),user.getPassword(), true);
+        RegisterValid registerValid = registrationValidator.validateRegistrationForm(user,client);
+
+        if(registerValid.isValid()) {
+            Client clientEntity = new Client(client.getName(),client.getMidName(),client.getLastName(),client.getPassportNumber());
+            User userEntity = new User(user.getUsername(),user.getPassword(),true);
             userEntity.setClient(clientEntity);
+            clientRepo.save(clientEntity);
             userRepo.save(userEntity);
-        } else {
-            for (String s: validation.keySet()) {
-                sb.append(validation.get(s));
-            }
         }
 
-        return sb.toString();
+        return registerValid;
     }
 }

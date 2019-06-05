@@ -21,52 +21,42 @@ public class RegistrationValidator {
     @Autowired
     private ClientRepo clientRepo;
 
-    public Map<String,String> validateRegistrationForm(UserDto user, ClientDto client) {
-        Map<String,String> validateMap = new HashMap<>();
-//        validateMap.put("username","");
-//        validateMap.put("password","");
-//        validateMap.put("name","");
-//        validateMap.put("midName","");
-//        validateMap.put("lastName","");
-//        validateMap.put("passportNumber","");
+    public RegisterValid validateRegistrationForm(UserDto user, ClientDto client) {
+
+        RegisterValid registerValid = new RegisterValid();
+
+        if(userRepo.findByUsername(user.getUsername()) != null) {
+            registerValid.setUniqUserName(false);
+        }
+
+        if(clientRepo.findClientByPassportNumber(client.getPassportNumber()) != null) {
+            registerValid.setUniqPassport(false);
+        }
 
         if(user.getUsername().isEmpty()) {
-            validateMap.put("username","Логин не может быть пустым!\n");
+            registerValid.setValidUsername(false);
         }
 
         if(user.getPassword().isEmpty()) {
-            validateMap.put("password","Пароль не может быть пустым!\n");
+            registerValid.setValidPassport(false);
         }
 
         if(client.getName().isEmpty()) {
-            validateMap.put("name","Имя не может быть пустым!\n");
+            registerValid.setValidName(false);
         }
 
         if(client.getName().isEmpty()) {
-            validateMap.put("midName","Отчество не может быть пустым!\n");
+            registerValid.setValidMidName(false);
         }
 
         if(client.getName().isEmpty()) {
-            validateMap.put("lastName","Фамилия не может быть пустым!\n");
+            registerValid.setValidLastName(false);
         }
 
         if(client.getName().isEmpty()) {
-            validateMap.put("passportNumber","Паспорт не может быть пустым!\n");
+            registerValid.setValidPassport(false);
         }
 
-        User userFromDB = userRepo.findByUsername(user.getUsername());
-        Client clientFromDB = clientRepo.findClientByPassportNumber(client.getPassportNumber());
-
-
-        StringBuilder sb = new StringBuilder();
-        if(userFromDB != null) {
-            sb.append("Такой пользователь уже существует.\n");
-        }
-
-        if(clientFromDB != null) {
-            sb.append("Клиент с таким номером паспорта уже существует.");
-        }
-
-        return validateMap;
+        return registerValid;
     }
 }

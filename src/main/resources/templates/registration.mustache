@@ -3,21 +3,28 @@
 <head>
     <title>Регистрация</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
+    </head>
 <body>
+<br>
+<br>
+<br>
 <div align="center">
     <div class="card" style="width: 40rem">
         <div class="container">
 
             <h2>Страница регистрации</h2>
-
+            {{#success}}
+                <div class="alert alert alert-success" role="alert">
+                    {{success}}
+                </div>
+            {{/success}}
             {{#message}}
                 <div class="alert alert-danger" role="alert">
                     {{message}}
                 </div>
             {{/message}}
             <br>
-            <form action="/registration" method="post">
+            <form action="/registration" method="post" data-toggle="validator" role="form">
                 <div><label> Логин : <input type="text" class="form-control" name="username" placeholder="Логин"/> </label></div>
                 <div><label> Пароль: <input type="password" class="form-control" name="password" placeholder="Пароль"/> </label></div>
                 <div><label> Имя: <input type="text" class="form-control" name="name" placeholder="Имя"/> </label></div>
